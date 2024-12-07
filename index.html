@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Product Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .company-logo img {
+            max-width: 20%; /* نسبة من العرض */
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .main-display {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .main-image {
+            width: 100%; /* عرض الصورة يتكيف مع الشاشة */
+            max-width: 500px; /* الحد الأقصى لعرض الصورة */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .navigation-buttons {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navigation-buttons span {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 50%;
+            width: 10vw; /* نسبة من عرض الشاشة */
+            height: 10vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            font-size: 4vw;
+        }
+
+        .navigation-buttons span:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .product-info {
+            margin-top: 20px;
+        }
+
+        .product-title {
+            font-size: 5vw; /* حجم النص يتكيف مع العرض */
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            font-size: 4vw; /* النصوص تتكيف مع العرض */
+            color: #666;
+        }
+
+        .extra-image {
+            width: 100%;
+            max-width: 500px;
+            height: 50%; /* تقليل الطول */
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        /* نافذة التكبير */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        .popup .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 5vw;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- شعار الشركة -->
+        <div class="company-logo">
+            <img src="5324-SAN-Coastal-Drift_6.png" alt="Company Logo">
+        </div>
+
+        <!-- عرض الصورة الرئيسية -->
+        <div class="main-display">
+            <img id="mainImage" src="5324-SAN-Coastal-Drift_1.jpg" alt="Main Image" class="main-image" onclick="openPopup(this.src)">
+            <!-- أزرار التنقل -->
+            <div class="navigation-buttons">
+                <span onclick="prevImage()">&#8592;</span>
+                <span onclick="nextImage()">&#8594;</span>
+            </div>
+        </div>
+
+        <!-- النصوص الوصفية -->
+        <div class="product-info">
+            <div class="product-title">5324 SAN Coastal Drift</div>
+            <div class="product-description">
+                Woodgrain <br> Edgeband – 682P (REHAU)
+            </div>
+        </div>
+
+        <!-- صورة إضافية -->
+        <img src="5324-SAN-Coastal-Drift_5.jpg" alt="Additional Image" class="extra-image" onclick="openPopup(this.src)">
+
+        <!-- نافذة التكبير -->
+        <div class="popup" id="popup">
+            <span class="close" onclick="closePopup()">×</span>
+            <img src="" alt="Popup Image" id="popupImage">
+        </div>
+    </div>
+
+    <script>
+        // قائمة الصور
+        const images = [
+            "5324-SAN-Coastal-Drift_1.jpg",
+            "5324-SAN-Coastal-Drift_2.jpg",
+            "5324-SAN-Coastal-Drift_3.jpg",
+            "5324-SAN-Coastal-Drift_4.jpg"
+        ];
+
+        let currentIndex = 0;
+
+        function showImage(index) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = images[index];
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(currentIndex);
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }
+
+        // فتح نافذة التكبير
+        function openPopup(src) {
+            const popup = document.getElementById('popup');
+            const popupImage = document.getElementById('popupImage');
+            popupImage.src = src;
+            popup.style.display = "flex";
+        }
+
+        // إغلاق نافذة التكبير
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = "none";
+        }
+    </script>
+</body>
+</html>
